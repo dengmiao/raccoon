@@ -1,0 +1,81 @@
+server:
+  port: 7777
+  servlet:
+    context-path: /cure
+jasypt:
+  encryptor:
+    password: cure
+mybatis-plus:
+  # 放在resource目录 classpath:/mapper/*mapper.xml
+  mapper-locations: classpath:/mybatis/mapper/**/*Mapper.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.cure.**.entity
+  #
+  global-config:
+    # SQL 解析缓存，开启后多租户 @SqlParser 注解生效
+    sql-parser-cache: true
+    # 逻辑删除配置
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    # show sql
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # 配置mybaits自定义类型转换类所在的包
+  type-handlers-package: com.corgi.base.fastjson.handler
+spring:
+  profiles:
+    active: dev
+  jpa:
+    show-sql: true
+    # 自动生成表结构
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+cure:
+  project:
+    name: cure
+    version: 1.0.0
+  token:
+    # 默认JWT 启用Redis后设置为true后，token将存入redis，并具有单点登录功能
+    redis: true
+  # token过期时间（分钟）
+  tokenExpireTime: 60
+  # 用户选择保存登录状态对应token过期时间（天）
+  saveLoginTime: 7
+  # 限制用户登陆错误次数（次）
+  loginTimeLimit: 10
+  # 错误超过次数后多少分钟后才能继续登录（分钟）
+  loginAfterTime: 10
+  # 自动配置
+  auto:
+    ignoreUrls:
+      - /api/auth/**
+      - /druid/**
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /swagger/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.jpg
+      - /**/*.ico
+      - /test/**
+swagger:
+  title: cure API 接口文档
+  description: cure Api Documentation
+  version: 1.0.0
+  termsOfServiceUrl: www.baidu.com
+  contact:
+    name: cure
+    url: www.baidu.com
+    email: 1297320571@qq.com
+# 文件上传
+upload:
+  path: E://upFiles

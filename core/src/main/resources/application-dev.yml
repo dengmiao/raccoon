@@ -1,0 +1,14 @@
+spring:
+  # 数据源
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/corgi?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: root
+    # Jasypt加密 可到common-toolKit中找到JasyptUtil加解密工具类生成加密结果 格式为ENC(加密结果)
+    password: ENC(0XKTrwDnuxtVXz55lqXZRw==)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # redis
+  redis:
+    host: 127.0.0.1
+    database: 2
+    port: 6379
+    timeout: 3000
