@@ -10,7 +10,8 @@ import com.cure.common.toolkit.ResultUtil;
 import com.cure.common.vo.PageVo;
 import com.cure.common.vo.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ import java.util.List;
  * @create: 2019-04-09 17:46
  **/
 @Slf4j
+@RestController
 public abstract class BaseController<E, ID extends Serializable> {
 
     private final IBaseJpaService<E,ID> jpaService;
@@ -36,18 +38,21 @@ public abstract class BaseController<E, ID extends Serializable> {
         this.myBatisService = myBatisService;
     }
 
+    public ResponseEntity<Result> getResult(Result result, HttpStatus status) {
+        return new ResponseEntity<>(result, status);
+    }
+
     /**
      * 基于mybatis的分页
      * @param pageVo
      * @param e
      * @return
      */
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
-    @ResponseBody
+    @GetMapping("list")
     public Result<?> getByPage(@ModelAttribute PageVo pageVo, E e){
         QueryWrapper<E> queryWrapper = new QueryWrapper<>(e);
         Page<E> page = new Page<>(pageVo.getPageNo(), pageVo.getPageSize());
-        //排序逻辑 处理 todo 多字段排序
+        //排序逻辑 处理
         String column = pageVo.getColumn(), order = pageVo.getOrder();
         if(ObjectUtil.isNotEmpty(column) && ObjectUtil.isNotEmpty(order)) {
             if("asc".equals(order)) {
@@ -65,8 +70,7 @@ public abstract class BaseController<E, ID extends Serializable> {
      * @param jsonObject
      * @return
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @Transactional(rollbackFor = Exception.class)
+    @PostMapping("add")
     public Result<E> add(@RequestBody JSONObject jsonObject) {
         Result<E> result = new Result<>();
         try {
@@ -86,8 +90,7 @@ public abstract class BaseController<E, ID extends Serializable> {
      * @param jsonObject
      * @return
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    @Transactional(rollbackFor = Exception.class)
+    @PutMapping("edit")
     public Result<E> edit(@RequestBody JSONObject jsonObject) {
         Result<E> result = new Result<>();
         Class<E> clazz = (Class <E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -106,8 +109,7 @@ public abstract class BaseController<E, ID extends Serializable> {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    @Transactional(rollbackFor = Exception.class)
+    @DeleteMapping("delete")
     public Result<E> delete(@RequestParam(name="id") String id) {
         Result<E> result = new Result<>();
         boolean ok = myBatisService.removeById(id);
@@ -162,7 +164,7 @@ public abstract class BaseController<E, ID extends Serializable> {
     @ResponseBody
     public Result<E> save(@ModelAttribute E entity){
 
-        E e = jpaService.save(entity);
+        E e = jpaService.saveEntity(entity);
         return new ResultUtil<E>().setData(e);
     }
 

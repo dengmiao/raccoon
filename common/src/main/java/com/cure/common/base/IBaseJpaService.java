@@ -52,7 +52,7 @@ public interface IBaseJpaService<Entity, ID extends Serializable> {
      * @param entity
      * @return
      */
-    default Entity save(Entity entity) {
+    default Entity saveEntity(Entity entity) {
 
         return getRepository().save(entity);
     }

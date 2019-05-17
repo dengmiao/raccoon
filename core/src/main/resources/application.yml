@@ -1,7 +1,7 @@
 server:
   port: 7777
   servlet:
-    context-path: /cure
+    context-path: /raccoon
 jasypt:
   encryptor:
     password: cure
@@ -24,7 +24,7 @@ mybatis-plus:
     # show sql
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   # 配置mybaits自定义类型转换类所在的包
-  type-handlers-package: com.corgi.base.fastjson.handler
+  type-handlers-package: com.cure.common.handler
 spring:
   profiles:
     active: dev
@@ -38,7 +38,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 cure:
   project:
-    name: cure
+    name: raccoon
     version: 1.0.0
   token:
     # 默认JWT 启用Redis后设置为true后，token将存入redis，并具有单点登录功能
@@ -54,7 +54,7 @@ cure:
   # 自动配置
   auto:
     ignoreUrls:
-      - /api/auth/**
+      - /auth/**
       - /druid/**
       - /swagger-ui.html
       - /swagger-resources/**

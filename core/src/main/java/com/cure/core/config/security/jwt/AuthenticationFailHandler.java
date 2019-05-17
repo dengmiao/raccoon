@@ -29,10 +29,10 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    @Value("${corgi.loginTimeLimit}")
+    @Value("${cure.loginTimeLimit}")
     private Integer loginTimeLimit;
 
-    @Value("${corgi.loginAfterTime}")
+    @Value("${cure.loginAfterTime}")
     private Integer loginAfterTime;
 
     @Autowired

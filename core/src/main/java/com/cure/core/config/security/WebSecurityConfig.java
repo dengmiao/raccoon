@@ -30,10 +30,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${corgi.token.redis}")
+    @Value("${cure.token.redis}")
     private Boolean tokenRedis;
 
-    @Value("${corgi.tokenExpireTime}")
+    @Value("${cure.tokenExpireTime}")
     private Integer tokenExpireTime;
 
     @Autowired
@@ -79,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         registry.and()
                 //表单登录方式
                 .formLogin()
-                .loginPage("/common/needLogin")
+                .loginPage("/security/needLogin")
                 //登录请求url
                 .loginProcessingUrl("/login")
                 .permitAll()

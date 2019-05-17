@@ -1,6 +1,6 @@
 package com.cure.core.modules.sys.repository;
 
-import com.cure.common.base.IBaseJpaService;
+import com.cure.common.base.IBaseRepository;
 import com.cure.core.modules.sys.entity.SysUser;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * @create: 2019-05-17 18:04
  **/
 @Repository
-public interface SysUserRepository extends IBaseJpaService<SysUser, Long> {
+public interface SysUserRepository extends IBaseRepository<SysUser, Long> {
 
     /**
      * 按用户名查找

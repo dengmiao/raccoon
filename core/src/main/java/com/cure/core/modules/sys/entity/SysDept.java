@@ -1,7 +1,7 @@
 package com.cure.core.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.corgi.base.base.BaseEntity;
+import com.cure.common.base.BaseEntity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Where;
