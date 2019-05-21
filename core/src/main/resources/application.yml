@@ -24,7 +24,7 @@ mybatis-plus:
     # show sql
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   # 配置mybaits自定义类型转换类所在的包
-  type-handlers-package: com.cure.common.handler
+  type-handlers-package: com.cure.common.handler.mybatis
 spring:
   profiles:
     active: dev
@@ -51,6 +51,13 @@ cure:
   loginTimeLimit: 10
   # 错误超过次数后多少分钟后才能继续登录（分钟）
   loginAfterTime: 10
+  # 社交登陆相关配置
+  social:
+    filterProcessesUrl: /openid
+    qq:
+      app-id: 101514978
+      app-secret: 3fb5da91d5e0fc41b218e7cbb5356738
+      providerId: qq
   # 自动配置
   auto:
     ignoreUrls:

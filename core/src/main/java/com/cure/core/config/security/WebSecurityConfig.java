@@ -6,6 +6,9 @@ import com.cure.core.config.security.jwt.AuthenticationSuccessHandler;
 import com.cure.core.config.security.jwt.JwtAuthenticationFilter;
 import com.cure.core.config.security.jwt.RestAccessDeniedHandler;
 import com.cure.core.config.security.permission.MyFilterSecurityInterceptor;
+import com.cure.core.config.security.social.config.CustomSocialConfigurer;
+import com.cure.core.config.security.social.config.SocialProperties;
+import com.cure.core.config.security.social.core.CustomSocialAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -60,6 +63,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CureProperties cureProperties;
 
+    @Autowired(required = false)
+    private CustomSocialAuthenticationSuccessHandler socialAuthenticationSuccessHandler;
+
+    @Autowired
+    private SocialProperties socialProperties;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
@@ -68,6 +77,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+
+        // 配置社交登录
+        CustomSocialConfigurer socialConfigurer = new CustomSocialConfigurer();
+        socialConfigurer
+                .successHandler(socialAuthenticationSuccessHandler)
+                .signupUrl(socialProperties.getSignUpPage())
+        ;
+        http.apply(socialConfigurer);
+
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
                 .authorizeRequests();
 

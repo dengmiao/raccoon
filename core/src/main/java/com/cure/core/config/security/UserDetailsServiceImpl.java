@@ -2,6 +2,7 @@ package com.cure.core.config.security;
 
 import cn.hutool.core.util.StrUtil;
 import com.cure.common.annotation.Log;
+import com.cure.core.config.security.social.core.CustomSocialUserDetails;
 import com.cure.core.modules.sys.entity.SysUser;
 import com.cure.core.modules.sys.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.social.security.SocialUser;
+import org.springframework.social.security.SocialUserDetails;
+import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -22,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  **/
 @Slf4j
 @Component
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService, SocialUserDetailsService {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -30,6 +34,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private ISysUserService iSysUserService;
 
+    /**
+     * 表单登录
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     @Log(model = "LOGIN", action = "/login")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -45,5 +55,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("用户不存在");
         }
         return new SecurityUserDetails(user);
+    }
+
+    /**
+     * 社交登录
+     * @param userId 用户唯一标识 id或username
+     * @return
+     * @throws UsernameNotFoundException
+     */
+    @Override
+    public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
+        SysUser user = iSysUserService.findByUsername(userId);
+        if(user == null) {
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        return new CustomSocialUserDetails(user.getUsername(), user.getPassword(),
+                String.valueOf(user.getId()), user.getRealname(),
+                // 权限
+                null);
     }
 }
