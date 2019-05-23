@@ -1,6 +1,5 @@
 package com.cure.core.modules.sys.controller;
 
-import com.cure.common.toolkit.ResultUtil;
 import com.cure.common.vo.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
