@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.lyyzoo.sunny.captcha.autoconfigure.CaptchaAutoConfiguration

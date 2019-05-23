@@ -41,4 +41,6 @@ public interface SecurityConstant {
      * 用户token前缀key 单点登录使用
      */
     String USER_TOKEN = "CURE_USER_TOKEN:";
+
+    String SECURITY_KEY = "security";
 }

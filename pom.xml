@@ -8,6 +8,7 @@
         <module>common</module>
         <module>core</module>
         <module>limit</module>
+        <module>captcha</module>
     </modules>
 
     <parent>
