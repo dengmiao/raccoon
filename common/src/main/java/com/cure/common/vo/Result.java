@@ -8,6 +8,8 @@ import lombok.experimental.Accessors;
 import org.reactivestreams.Publisher;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 /**
  * @title: Result
@@ -42,7 +44,7 @@ public class Result<T> implements Serializable {
     /**
      * 时间戳
      */
-    private long timestamp = System.currentTimeMillis();
+    private long timestamp = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
 
     @JsonIgnore
     @JSONField(serialize=false)
