@@ -1,4 +1,4 @@
-package com.cure.common.toolkit;
+package com.cure.captcha;
 
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;

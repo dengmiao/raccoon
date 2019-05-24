@@ -3,8 +3,7 @@ package com.cure.captcha;
 import cn.hutool.core.util.StrUtil;
 import com.cure.captcha.autoconfigure.CaptchaProperties;
 import com.cure.captcha.message.CaptchaMessageSource;
-import com.cure.common.constant.Regexs;
-import com.cure.common.toolkit.RedisHelper;
+import com.cure.common.constant.Regex;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -65,7 +64,7 @@ public class CaptchaMessageHelper {
      */
     public CaptchaResult generateMobileCaptcha(String mobile, String captchaCachePrefix) {
         CaptchaResult result = new CaptchaResult();
-        if (!Regexs.isMobile(mobile)) {
+        if (!Regex.isMobile(mobile)) {
             result.setSuccess(false);
             result.setMessage(CaptchaMessageSource.getMessage("phone.format.incorrect", mobile));
             return result;
@@ -110,7 +109,7 @@ public class CaptchaMessageHelper {
      */
     public CaptchaResult generateEmailCaptcha(String email, String captchaCachePrefix) {
         CaptchaResult result = new CaptchaResult();
-        if (!Regexs.isEmail(email)) {
+        if (!Regex.isEmail(email)) {
             result.setSuccess(false);
             result.setMessage(CaptchaMessageSource.getMessage("email.format.incorrect", email));
             return result;

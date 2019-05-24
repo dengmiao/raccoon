@@ -4,12 +4,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @title: Regexs
+ * @title: Regex
  * @description: 常用正则表达式
  * @author: dengmiao
  * @create: 2019-05-23 17:56
  **/
-public interface Regexs {
+public interface Regex {
 
     /** 整数 */
     String INTEGER = "^-?[1-9]\\d*$";
@@ -98,9 +98,9 @@ public interface Regexs {
 
     /**
      * 匹配正则
-     *
      * @param str 源字符串
      * @param regex 正则表达式
+     * @return
      */
     static boolean is(String str, String regex) {
         Pattern p = Pattern.compile(regex);
@@ -108,23 +108,48 @@ public interface Regexs {
         return m.matches();
     }
 
+    /**
+     * 数字
+     * @param str
+     * @return
+     */
     static boolean isNumber(String str) {
-        return is(str, Regexs.NUMBER);
+        return is(str, Regex.NUMBER);
     }
 
+    /**
+     * 邮箱
+     * @param str
+     * @return
+     */
     static boolean isEmail(String str) {
-        return is(str, Regexs.EMAIL);
+        return is(str, Regex.EMAIL);
     }
 
+    /**
+     * ip地址
+     * @param str
+     * @return
+     */
     static boolean isIP(String str) {
-        return is(str, Regexs.IP4);
+        return is(str, Regex.IP4);
     }
 
+    /**
+     * 电话号码
+     * @param str
+     * @return
+     */
     static boolean isMobile(String str) {
-        return is(str, Regexs.MOBILE);
+        return is(str, Regex.MOBILE);
     }
 
+    /**
+     * url
+     * @param str
+     * @return
+     */
     static boolean isUrl(String str) {
-        return is(str, Regexs.URL);
+        return is(str, Regex.URL);
     }
 }

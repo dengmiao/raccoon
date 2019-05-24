@@ -1,6 +1,7 @@
 package com.cure.captcha.message;
 
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 /**
@@ -17,7 +18,7 @@ public class CaptchaMessageSource {
 
     static {
         ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
-        bundleMessageSource.setBasename("com.lyyzoo.sunny.captcha.messages");
+        bundleMessageSource.setBasename("com.cure.captcha.messages");
         bundleMessageSource.setDefaultEncoding("UTF-8");
         bundleMessageSource.setUseCodeAsDefaultMessage(true);
         messageSource = bundleMessageSource;
@@ -25,18 +26,18 @@ public class CaptchaMessageSource {
 
     /**
      * @param code code
-     * @return message
+     * @return messages
      */
     public static String getMessage(String code) {
-        return messageSource.getMessage(code, null, code, LanguageHelper.locale());
+        return messageSource.getMessage(code, null, code, LocaleContextHolder.getLocale());
     }
 
     /**
      * @param code code
      * @param args args
-     * @return message
+     * @return messages
      */
     public static String getMessage(String code, Object... args) {
-        return messageSource.getMessage(code, args, code, LanguageHelper.locale());
+        return messageSource.getMessage(code, args, code, LocaleContextHolder.getLocale());
     }
 }

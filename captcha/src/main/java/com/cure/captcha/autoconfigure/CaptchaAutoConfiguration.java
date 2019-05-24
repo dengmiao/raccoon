@@ -2,6 +2,8 @@ package com.cure.captcha.autoconfigure;
 
 import com.cure.captcha.CaptchaImageHelper;
 import com.cure.captcha.CaptchaMessageHelper;
+import com.cure.captcha.RedisHelper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
@@ -9,6 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.Properties;
 
@@ -57,5 +60,10 @@ public class CaptchaAutoConfiguration {
     @Bean
     public CaptchaMessageHelper captchaSmsHelper(CaptchaProperties captchaProperties) {
         return new CaptchaMessageHelper(captchaProperties);
+    }
+
+    @Bean
+    public RedisHelper redisHelper() {
+        return new RedisHelper(new StringRedisTemplate(), new ObjectMapper());
     }
 }

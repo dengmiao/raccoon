@@ -1,7 +1,9 @@
 package com.cure.core.config.security.sms;
 
+import com.cure.captcha.CaptchaMessageHelper;
 import com.cure.captcha.CaptchaResult;
 import com.cure.core.config.security.SecurityConstant;
+import com.cure.core.config.security.exception.CaptchaException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
@@ -26,6 +28,13 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
     private UserDetailsService userDetailsService;
 
     private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
+
+    private CaptchaMessageHelper captchaMessageHelper;
+
+    public SmsAuthenticationProvider(UserDetailsService userDetailsService, CaptchaMessageHelper captchaMessageHelper) {
+        this.userDetailsService = userDetailsService;
+        this.captchaMessageHelper = captchaMessageHelper;
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

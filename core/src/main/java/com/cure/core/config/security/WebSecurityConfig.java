@@ -97,9 +97,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         registry.and()
                 //表单登录方式
                 .formLogin()
-                .loginPage("/security/needLogin")
+                .loginPage(cureProperties.getLoginPage())
                 //登录请求url
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl(cureProperties.getProcessingUrl())
                 .permitAll()
                 //成功处理类
                 .successHandler(successHandler)

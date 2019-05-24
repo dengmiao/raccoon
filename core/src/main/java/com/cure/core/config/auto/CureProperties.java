@@ -27,4 +27,14 @@ public class CureProperties {
      * spring security 忽略鉴权的url集合
      */
     private final List<String> ignoreUrls;
+
+    /**
+     * 登录页面或跳转登录的接口
+     */
+    private final String loginPage = "/security/needLogin";
+
+    /**
+     * 处理登录的url
+     */
+    private final String processingUrl = "/login";
 }

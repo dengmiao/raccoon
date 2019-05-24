@@ -2,7 +2,6 @@ package com.cure.captcha;
 
 import com.cure.captcha.autoconfigure.CaptchaProperties;
 import com.cure.captcha.message.CaptchaMessageSource;
-import com.cure.common.toolkit.RedisHelper;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
