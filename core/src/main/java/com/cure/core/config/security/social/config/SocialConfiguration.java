@@ -24,7 +24,7 @@ import javax.sql.DataSource;
 
 /**
  * @title: SocialConfiguration
- * @description:
+ * @description: social 配置
  * @author: dengmiao
  * @create: 2019-05-21 13:52
  **/
@@ -44,8 +44,8 @@ public class SocialConfiguration extends SocialConfigurerAdapter {
 
     @Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
-        JdbcUsersConnectionRepository repository =  new JdbcUsersConnectionRepository(
-        dataSource, connectionFactoryLocator, Encryptors.noOpText());
+        JdbcUsersConnectionRepository repository =
+                new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
         // 表前缀
         repository.setTablePrefix("");
         repository.setConnectionSignUp(connectionSignUp);

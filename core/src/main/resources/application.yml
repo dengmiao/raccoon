@@ -63,17 +63,23 @@ cure:
     ignoreUrls:
       - /auth/**
       - /druid/**
+      - /webjars/**
       - /swagger-ui.html
       - /swagger-resources/**
       - /swagger/**
       - /swagger/**
       - /**/v2/api-docs
+      - /static/**
       - /**/*.js
       - /**/*.css
+      - /**/*.html
       - /**/*.png
       - /**/*.jpg
       - /**/*.ico
       - /test/**
+      - /authentication/**
+      - /signup
+      - /public/**
 swagger:
   title: cure API 接口文档
   description: cure Api Documentation

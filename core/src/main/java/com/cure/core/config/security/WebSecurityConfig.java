@@ -6,6 +6,10 @@ import com.cure.core.config.security.jwt.AuthenticationSuccessHandler;
 import com.cure.core.config.security.jwt.JwtAuthenticationFilter;
 import com.cure.core.config.security.jwt.RestAccessDeniedHandler;
 import com.cure.core.config.security.permission.MyFilterSecurityInterceptor;
+import com.cure.core.config.security.sms.SmsAuthenticationDetailsSource;
+import com.cure.core.config.security.sms.SmsAuthenticationFailureHandler;
+import com.cure.core.config.security.sms.SmsAuthenticationProvider;
+import com.cure.core.config.security.sms.config.SmsLoginConfigurer;
 import com.cure.core.config.security.social.config.CustomSocialConfigurer;
 import com.cure.core.config.security.social.config.SocialProperties;
 import com.cure.core.config.security.social.core.CustomSocialAuthenticationSuccessHandler;
@@ -21,6 +25,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -64,6 +69,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private CureProperties cureProperties;
 
     @Autowired(required = false)
+    private SmsAuthenticationFailureHandler smsAuthenticationFailureHandler;
+    @Autowired(required = false)
+    private SmsAuthenticationDetailsSource smsAuthenticationDetailsSource;
+    @Autowired(required = false)
+    private SmsAuthenticationProvider smsAuthenticationProvider;
+
+    @Autowired(required = false)
     private CustomSocialAuthenticationSuccessHandler socialAuthenticationSuccessHandler;
 
     @Autowired
@@ -71,12 +83,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+
+        // 配置短信登录
+        SmsLoginConfigurer smsLoginConfigurer = new SmsLoginConfigurer();
+        smsLoginConfigurer
+                .authenticationDetailsSource(smsAuthenticationDetailsSource)
+                .successHandler(successHandler)
+                .failureHandler(smsAuthenticationFailureHandler)
+        ;
+        http.apply(smsLoginConfigurer);
+        http.authenticationProvider(smsAuthenticationProvider);
 
         // 配置社交登录
         CustomSocialConfigurer socialConfigurer = new CustomSocialConfigurer();
@@ -144,5 +166,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //这句很关键，重用WebSecurityConfigurerAdapter配置的AuthenticationManager，不然要自己组装AuthenticationManager
         filter.setAuthenticationManager(authenticationManagerBean());
         return filter;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

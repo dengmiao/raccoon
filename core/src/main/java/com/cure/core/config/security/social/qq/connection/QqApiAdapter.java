@@ -14,11 +14,21 @@ import org.springframework.social.connect.UserProfile;
  **/
 public class QqApiAdapter implements ApiAdapter<QqApi> {
 
+    /**
+     * 测试api连接是否可用
+     * @param qqApi
+     * @return
+     */
     @Override
     public boolean test(QqApi qqApi) {
         return true;
     }
 
+    /**
+     * QQApi 与 Connection 做适配
+     * @param qqApi
+     * @param connectionValues
+     */
     @Override
     public void setConnectionValues(QqApi qqApi, ConnectionValues connectionValues) {
         QqUserInfo userInfo = qqApi.getUserInfo();

@@ -30,6 +30,8 @@ import java.util.List;
 @Where(clause = "del_flag = 0")
 public class SysUser extends BaseEntity<Long> {
 
+    public static final String FIELD_USERNAME = "username";
+
     @Id
     @TableId(type = IdType.AUTO)
     @GeneratedValue(strategy = GenerationType.AUTO)

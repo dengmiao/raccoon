@@ -8,6 +8,8 @@ import com.cure.core.modules.sys.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +18,8 @@ import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -50,7 +54,7 @@ public class UserDetailsServiceImpl implements UserDetailsService, SocialUserDet
             //超过限制次数
             throw new RuntimeException("登录错误次数超过限制，请"+timeRest+"分钟后再试");
         }
-        SysUser user = iSysUserService.findByUsername(username);
+        SysUser user = iSysUserService.findByUsernameOrPhone(username, null);
         if(user == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
@@ -65,10 +69,14 @@ public class UserDetailsServiceImpl implements UserDetailsService, SocialUserDet
      */
     @Override
     public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
-        SysUser user = iSysUserService.findByUsername(userId);
+        SysUser user = iSysUserService.findByUsernameOrPhone(userId, null);
         if(user == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
+
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
         return new CustomSocialUserDetails(user.getUsername(), user.getPassword(),
                 String.valueOf(user.getId()), user.getRealname(),
                 // 权限

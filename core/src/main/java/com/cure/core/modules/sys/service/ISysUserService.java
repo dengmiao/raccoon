@@ -2,6 +2,8 @@ package com.cure.core.modules.sys.service;
 
 import com.cure.core.modules.sys.entity.SysUser;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @title: ISysUserService
  * @description:
@@ -11,9 +13,18 @@ import com.cure.core.modules.sys.entity.SysUser;
 public interface ISysUserService {
 
     /**
-     * 按用户名查找
+     * 按用户名或电话查找
      * @param username
+     * @param phone
      * @return
      */
-    SysUser findByUsername(String username);
+    SysUser findByUsernameOrPhone(String username, String phone);
+
+    /**
+     * 绑定第三方账号
+     * @param username
+     * @param password
+     * @param request
+     */
+    void bindProvider(String username, String password, HttpServletRequest request);
 }

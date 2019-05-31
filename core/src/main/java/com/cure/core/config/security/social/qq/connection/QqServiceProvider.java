@@ -25,7 +25,7 @@ public class QqServiceProvider extends AbstractOAuth2ServiceProvider<QqApi> {
     private String appId;
 
     public QqServiceProvider(String appId, String appSecret) {
-        super(new OAuth2Template(appId, appSecret, URL_AUTHORIZE, URL_GET_ACCESS_TOKEN));
+        super(new QqOauth2Template(appId, appSecret, URL_AUTHORIZE, URL_GET_ACCESS_TOKEN));
         this.appId = appId;
     }
 

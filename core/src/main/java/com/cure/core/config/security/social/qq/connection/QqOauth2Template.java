@@ -25,6 +25,12 @@ public class QqOauth2Template extends OAuth2Template {
         setUseParametersForClientAuthentication(true);
     }
 
+    /**
+     * 解析 QQ 返回的令牌
+     * @param accessTokenUrl
+     * @param parameters
+     * @return
+     */
     @Override
     protected AccessGrant postForAccessGrant(String accessTokenUrl, MultiValueMap<String, String> parameters) {
         // 返回格式：access_token=FE04********CCE2&expires_in=7776000&refresh_token=88E4***********BE14

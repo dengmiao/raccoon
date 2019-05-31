@@ -24,10 +24,10 @@ public class SmsLoginConfiguration {
     @Autowired
     private CaptchaMessageHelper captchaMessageHelper;
 
-    @Bean
+    /*@Bean
     public SmsAuthenticationFailureHandler smsAuthenticationFailureHandler() {
         return new SmsAuthenticationFailureHandler();
-    }
+    }*/
 
     @Bean
     public SmsAuthenticationDetailsSource smsAuthenticationDetailsSource() {

@@ -14,9 +14,10 @@ import org.springframework.stereotype.Repository;
 public interface SysUserRepository extends IBaseRepository<SysUser, Long> {
 
     /**
-     * 按用户名查找
+     * 按用户名或联系电话查找
      * @param username
+     * @param phone
      * @return
      */
-    SysUser findByUsername(String username);
+    SysUser findByUsernameOrPhone(String username, String phone);
 }
