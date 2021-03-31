@@ -20,7 +20,7 @@
         <!-- jasypt -->
         <jasypt.version>2.1.0</jasypt.version>
         <!-- guava -->
-        <google.guava.version>27.0.1-jre</google.guava.version>
+        <google.guava.version>29.0-jre</google.guava.version>
         <!-- mybatis-plus -->
         <mybatis-plus.version>3.0.6</mybatis-plus.version>
         <!-- hutool -->
